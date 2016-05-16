@@ -1,0 +1,195 @@
+ 
+String aString = "xyz"; // 1 string object created
+		
+For the first System.out.println,
+System.out.println("1.	xyz == aString:	" +     "xyz" == aString   ); 
+
+Output is false
+because '+' operator concatenates two string "1.	xyz == aString:	" and "xyz" and then compares
+ with string literal aString ( aString = "xyz") i.e the expression becomes 
+"1.	xyz == aString:	xyz" == "xyz" which is clearly false. 
+
+Strings generated in this statement are 2  "1.	xyz == aString:	" and "1.	xyz == aString:	xyz"
+therefore total string objects created till now = 3
+
+
+		
+
+For the next statement
+System.out.println("2.	xyz == aString:	" +   ( "xyz" == aString ) );
+As the paranthesis takes higher precedence, first "xyz" is compared with string literal aString which is
+also equal to "xyz", since for the string literals only one copy of each distinct string value is stored in string constant pool, hence the "==" operators returns true as both are pointing to the same object.
+The "+" operator then concatenates true with "2.	xyz == aString:	" to give "2.	xyz == aString:	true"
+
+In this statement 2 objects are created "2.	xyz == aString:	" and "2.	xyz == aString:	true"
+therefore total no of objects = 5
+		
+
+After the below statement, new string object having value "xyz" is created on the heap
+String newString = new String("xyz"); 
+therefore total objects = 6
+
+
+
+
+
+For the statement System.out.println("xyz == new String(xyz)\n	" + ("xyz" == newString) );
+
+here due to paranthesis "xyz" == newString is resolved first.
+Here the operator "==" checks whether the string literal "xyz" refers to itself ,but on RHS we have a string object  "xyz" which is a new object and not same as string literal. Since 2 different objects are compared "==" operator returns false
+
+in this statement 2 objects are created 
+"xyz == new String(xyz)\n	" and 
+"xyz == new String(xyz)
+         false"
+therefore No of objects = 8
+
+
+
+
+
+For the statement method("1", "xyz", "xyz");
+
+Here the method() is passed with 1 literal "1" and  2 literals of same value "xyz" and since they refer to the same object the "==" operator returns true   
+In this statement 1 new string literal is created "1" and then the function is called.		
+Inside function 
+System.out.println(id + " in method"); creates 2 new string literal " in method" and "1 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString )); first the operator "==" compares the 2 literals of value "xyz" and hence returns true and then creates a literal "\tliteral= aNewString\n	"
+and then + operator concatenates with true to create again a new string literal 
+"    literal= aNewString
+     true"
+therefore total objects = 13
+//13
+
+
+
+
+
+ public static void method(String id, String literal, String aNewString)	{
+		System.out.println(id + " in method");
+		System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));
+	  }
+
+
+
+
+		method("2", "xyz", new String("xyz") );
+Here the method() is passed with 2 literals "2" and "xyz" and a new string object "xyz".
+Therefore 2 objects created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "2 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with a string object, it throws false.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with false due to "+" operator to form 1 new string literal
+"    literal= aNewString
+     false"
+
+therefore total objects are 17.
+
+
+
+
+
+
+
+
+		method("3", "xyz", "xy" + "z"); 
+Here the method() is passed with 3 literals "3" and 2 "xyz" 
+Therefore 3 string literals("3", "xy", "z") created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "3 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with the same string literal, it throws true.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with true due to "+" operator to form existing string literal
+"    literal= aNewString
+true"
+
+therefore total objects are 21.
+
+
+
+
+
+		method("4", "x" + "y" + "z", "xyz"); 
+
+
+Here the method() is passed with 3 literals, "4" and 2 "xyz" 
+Therefore 3 string literals("4", "x", "y") created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "4 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with the same string literal, it throws true.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with true due to "+" operator to form existing string literal
+"    literal= aNewString
+     true"
+
+therefore total objects are 25.
+
+
+
+
+
+
+
+
+
+		method("5", "x" + "y" + new String("z"), "xyz"); 
+
+
+
+Here the method() is passed with 2 literals, "5" and  "xyz" and 1 new object "xyz" 
+Therefore 1 string literals("5") and 1 string object "xyz" created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "5 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with a string object, it throws false.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with false due to "+" operator to form existing string literal
+"    literal= aNewString
+     false"
+
+therefore total objects are 28.
+
+
+
+
+
+
+
+
+
+		method("6", "x" + ( "y" + "z"), "xyz"); 
+
+Here the method() is passed with 3 literals, "6" and 2 "xyz"  
+Therefore 2 string literals("6", "yz") is created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "6 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with the same string literal, it throws true.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with true due to "+" operator to form existing string literal
+"    literal= aNewString
+     true"
+
+therefore total objects are 31.
+
+
+
+
+
+		method("7", 'x' + ( "y" + "z"), "xyz"); 
+
+
+Here the method() is passed with 3 literals, "7" and 2 "xyz"  
+Therefore 1 new string literals("7") is created in this statement and then the method is executed
+
+inside method
+System.out.println(id + " in method"); creates 1 new string literal "7 in method"
+System.out.println("\tliteral= aNewString\n	" + ( literal == aNewString ));since the operator "==" compares a literal with the same string literal, it throws true.
+and then the existing literal "\tliteral= aNewString\n	" concatenates with true due to "+" operator to form existing string literal
+"    literal= aNewString
+     true"
+
+therefore total objects are 33.
+
+
+
+
